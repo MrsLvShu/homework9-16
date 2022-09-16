@@ -28,6 +28,7 @@ export default {
             getLogin(this.query).then(res => {
                 console.log(res);
                 localStorage.setItem('token', res.data.data.token)
+                localStorage.setItem('username',this.query.username)
                 this.$router.push('/')
             })
         }

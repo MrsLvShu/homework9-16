@@ -8,7 +8,49 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    children: [
+      {
+        path: '/marketList',
+        name: 'marketList',
+        meta: {
+          title: '/ 限时活动',
+          leader: '营销管理',
+          path:'/marketList'
+        },
+        component: () => import('../views/marketList.vue')
+      }, 
+      {
+        path: '/orderList',
+        name: 'orderList',
+        meta: {
+          title: '/ 订单列表',
+          leader: '订单管理',
+          path: '/orderList'
+        },
+        component: () => import('../views/orderList.vue')
+      },
+      {
+        path: '/productList',
+        name: 'productList',
+        meta: {
+          title: '/ 商品列表',
+          leader: '商品管理',
+          path:'productList'
+        },
+        component: () => import('../views/productList.vue')
+      },
+      {
+        path: '/userList',
+        name: 'userList',
+        meta: {
+          title: '/ 用户列表',
+          leader: '注册用户管理',
+          path:'userList'
+        },
+        component: () => import('../views/userList.vue')
+      }
+    ]
   },
   {
     path: '/about',

@@ -1,10 +1,10 @@
 <template>
   <div class="home">
     <el-container>
-      <el-aside width="230px">
-        <el-menu router class="el-menu-vertical-demo"
-          background-color="#304156" text-color="#bfcbd9" active-text-color="#409eff">
-          <el-menu-item index="2">
+      <el-aside :width="isCollapse?'65px':'230px'">
+        <el-menu default-active="/" router class="el-menu-vertical-demo" :collapse="isCollapse" background-color="#304156"
+          text-color="#bfcbd9" active-text-color="#409eff">
+          <el-menu-item index="/">
             <i class="el-icon-menu"></i>
             <span slot="title">主页</span>
           </el-menu-item>
@@ -17,19 +17,40 @@
               <el-menu-item :index="ele.name">{{ele.title}}</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          
+
         </el-menu>
       </el-aside>
       <el-container>
         <el-header>
-          <i class="el-icon-s-fold"></i>
-        </el-header>
-<el-main>
-
-  <router-view></router-view>
-</el-main>
-      </el-container>
+          <i :class="isCollapse?'el-icon-s-unfold':'el-icon-s-fold'" @click="isCollapse=!isCollapse"></i>
+        <div class="link">
+          <router-link to="/productList">{{leader}}</router-link>
       
+        {{title}}</div>
+        <div class="right">
+          欢迎管理员:{{nikename}}
+          <img src="../assets/logo.png" alt="">
+          <el-dropdown @command="quite">
+            <span class="el-dropdown-link">
+              <i class="el-icon-caret-bottom"></i>
+            </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>乐居客户端预览</el-dropdown-item>
+            <el-dropdown-item>乐居后台预览</el-dropdown-item>
+            <el-dropdown-item>接口地址</el-dropdown-item>
+            <el-dropdown-item>不凡官网</el-dropdown-item>
+            <el-dropdown-item>gitee</el-dropdown-item>
+            <el-dropdown-item>vue-element-admin</el-dropdown-item>
+            <el-dropdown-item divided >退出</el-dropdown-item>
+          </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+        </el-header>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
+      </el-container>
+
     </el-container>
   </div>
 </template>
@@ -43,27 +64,66 @@ export default {
   name: 'HomeView',
   data() {
     return {
-      menus:[]
+      menus: [],
+      isCollapse: false,
+      title: '',
+      leader: '',
+      pathh: '',
+      nikename:''
     }
   },
   created() {
     getInitMenus().then(res => {
       console.log(res);
       this.menus = res.data.data.permissionList
+      this.nikename = localStorage.getItem('username')
     })
+  },
+  watch: {
+    $route: {
+      handler(newVal) {
+        console.log(newVal);
+        this.title = newVal.meta.title
+        this.leader = newVal.meta.leader
+        this.pathh = newVal.meta.path
+       },
+      immediate:true
+    }
+  },
+  methods: {
+    quite() {
+      console.log('111');
+      localStorage.removeItem('token')
+      this.$router.push('/login')
+    }
   },
 }
 </script>
 <style lang="scss" scoped>
-  .el-menu{
-    height: 100%;
-  }
-i{
+.el-menu {
+  height: 100%;
+}
+
+i {
   font-size: 26px;
 }
+
 .el-header {
   text-align: left;
   margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .link{
+    flex: 1;
+    margin-left: 15px;
+  }
+  .right{
+    img{
+      width: 30px;
+      height: 30px;
+    }
+  }
 }
 
 .el-aside {
