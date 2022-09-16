@@ -6,7 +6,11 @@ module.exports = defineConfig({
       '/lejuAdmin': {
         target: 'http://leju.bufan.cloud',
         changeOrigin: true,
-      }
+      },
+      '/admin': {
+        target: 'http://leju.bufan.cloud',
+        changeOrigin: true,
+      },
     }
   }
 })

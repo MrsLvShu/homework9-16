@@ -6,12 +6,12 @@ const $axios = axios.create({
     timeout: 5000
 })
 
-$axios.interceptors.request.use(function (config) {
-    // 在发送请求之前做些什么
-    return config;
-}, function (error) {
-    return Promise.reject(error);
-});
+$axios.interceptors.request.use(config => {
+    // console.log(config)
+    config.headers.token = window.localStorage.getItem('token')
+    // 在最后必须 return config
+    return config
+})
 
 // 添加响应拦截器
 $axios.interceptors.response.use(function (response) {
