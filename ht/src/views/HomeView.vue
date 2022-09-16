@@ -5,16 +5,22 @@
         <el-menu default-active="/" router class="el-menu-vertical-demo" :collapse="isCollapse" background-color="#304156"
           text-color="#bfcbd9" active-text-color="#409eff">
           <el-menu-item index="/">
-            <i class="el-icon-menu"></i>
+            <i class="el-icon-s-home"></i>
             <span slot="title">主页</span>
           </el-menu-item>
           <el-submenu :index="item.name" v-for="item in menus" :key="item.id">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i :class="item.icon"></i>
               <span>{{item.title}}</span>
             </template>
             <el-menu-item-group v-for="ele in item.children" :key="ele.id">
-              <el-menu-item :index="ele.name">{{ele.title}}</el-menu-item>
+
+
+                
+                <el-menu-item :index="ele.name">
+                  <i :class="ele.icon"></i>
+                  {{ele.title}}</el-menu-item>
+  
             </el-menu-item-group>
           </el-submenu>
 
@@ -69,7 +75,7 @@ export default {
       title: '',
       leader: '',
       pathh: '',
-      nikename:''
+      nikename: ''
     }
   },
   created() {
