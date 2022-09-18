@@ -8,8 +8,17 @@ const routes = [
   {
     path: '/',
     name: 'home',
+    redirect:'/dashboard',
     component: HomeView,
     children: [
+      {
+        path: '/dashboard',
+        name: 'dashboard',
+        meta: {
+          title: '主页',
+          path: '/dashboard'
+        },
+    },
       {
         path: '/marketList',
         name: 'marketList',
